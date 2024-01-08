@@ -10,21 +10,16 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="MenuBar" type="MenuBar" parent="."]
+[node name="Panel" type="Panel" parent="."]
 layout_mode = 0
-offset_right = 354.0
-offset_bottom = 231.0
+offset_right = 1026.0
+offset_bottom = 578.0
 
-[node name="Button" type="Button" parent="MenuBar"]
-layout_mode = 0
-offset_left = 1.0
-offset_top = 86.0
-offset_right = 353.0
-offset_bottom = 229.0
+[node name="Button" type="Button" parent="Panel"]
+layout_mode = 2
+offset_left = 168.0
+offset_top = 364.0
+offset_right = 883.0
+offset_bottom = 507.0
 text = "Start Game"
 script = ExtResource("1_f3lye")
-
-[node name="Start" type="MenuButton" parent="MenuBar/Button"]
-layout_mode = 0
-offset_right = 8.0
-offset_bottom = 8.0
