@@ -1,0 +1,78 @@
+[gd_scene load_steps=6 format=3 uid="uid://1ik3cqnhnulg"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_t8fdg"]
+[ext_resource type="Texture2D" uid="uid://btjc3w6bwpp6v" path="res://assets/img/yellowCircle.png" id="2_o32x7"]
+[ext_resource type="Texture2D" uid="uid://b0osbs48fptjo" path="res://assets/img/redFloor.png" id="3_q5vah"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_qxa8b"]
+radius = 56.829
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_id3h8"]
+size = Vector2(923, 252.5)
+
+[node name="Jogo" type="Node2D"]
+position = Vector2(534, -428)
+
+[node name="runningGame" type="Node2D" parent="."]
+
+[node name="Bolinha amarela" type="Node2D" parent="runningGame"]
+position = Vector2(84, -123)
+
+[node name="RigidBody2D" type="RigidBody2D" parent="runningGame/Bolinha amarela"]
+position = Vector2(-73, -27)
+scale = Vector2(0.8125, 0.8125)
+script = ExtResource("1_t8fdg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="runningGame/Bolinha amarela/RigidBody2D"]
+shape = SubResource("CircleShape2D_qxa8b")
+
+[node name="Sprite2D" type="Sprite2D" parent="runningGame/Bolinha amarela/RigidBody2D"]
+scale = Vector2(0.220684, 0.220684)
+texture = ExtResource("2_o32x7")
+
+[node name="Camera2D" type="Camera2D" parent="runningGame/Bolinha amarela/RigidBody2D"]
+scale = Vector2(1.23077, 1.23077)
+
+[node name="Chãos" type="Node" parent="runningGame"]
+
+[node name="Chão vermelho" type="Node2D" parent="runningGame/Chãos"]
+position = Vector2(522, -338)
+
+[node name="ground" type="StaticBody2D" parent="runningGame/Chãos/Chão vermelho"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="runningGame/Chãos/Chão vermelho/ground"]
+position = Vector2(0, 157)
+shape = SubResource("RectangleShape2D_id3h8")
+
+[node name="Sprite2D" type="Sprite2D" parent="runningGame/Chãos/Chão vermelho/ground"]
+position = Vector2(1.25, 157.75)
+scale = Vector2(3.13051, 1.08369)
+texture = ExtResource("3_q5vah")
+
+[node name="Chão vermelho2" type="Node2D" parent="runningGame/Chãos"]
+position = Vector2(-167, 195)
+
+[node name="ground" type="StaticBody2D" parent="runningGame/Chãos/Chão vermelho2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="runningGame/Chãos/Chão vermelho2/ground"]
+position = Vector2(0, 157)
+shape = SubResource("RectangleShape2D_id3h8")
+
+[node name="Sprite2D" type="Sprite2D" parent="runningGame/Chãos/Chão vermelho2/ground"]
+position = Vector2(1.25, 157.75)
+scale = Vector2(3.13051, 1.08369)
+texture = ExtResource("3_q5vah")
+
+[node name="Chão vermelho3" type="Node2D" parent="runningGame/Chãos"]
+position = Vector2(1286, 198)
+
+[node name="ground" type="StaticBody2D" parent="runningGame/Chãos/Chão vermelho3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="runningGame/Chãos/Chão vermelho3/ground"]
+position = Vector2(0, 157)
+shape = SubResource("RectangleShape2D_id3h8")
+
+[node name="Sprite2D" type="Sprite2D" parent="runningGame/Chãos/Chão vermelho3/ground"]
+position = Vector2(1.25, 157.75)
+scale = Vector2(3.13051, 1.08369)
+texture = ExtResource("3_q5vah")
