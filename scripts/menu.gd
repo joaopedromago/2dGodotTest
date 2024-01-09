@@ -2,18 +2,23 @@ extends Node
 
 
 func _ready():
-	self.pressed.connect(self._button_pressed)
+	pass
 
 
 func _process(delta):
 	pass
 
 
-func _button_pressed():
-	start_load_game()
+func _on_start_game_pressed():
+	Globals.set_is_load(false)
+	start_game()
 
 
-func start_load_game():
+func _on_load_game_pressed():
 	Globals.set_is_load(true)
+	start_game()
+
+
+func start_game():
 	var gameScene = "res://scenes/game.tscn"
 	get_tree().change_scene_to_file(gameScene)

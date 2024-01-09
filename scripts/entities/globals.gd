@@ -1,5 +1,7 @@
 extends Node
 
+const playerPath = "runningGame/Player/PlayerObject"
+
 var is_load = false
 
 

@@ -4,14 +4,61 @@
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_t8fdg"]
 [ext_resource type="Texture2D" uid="uid://btjc3w6bwpp6v" path="res://assets/img/yellowCircle.png" id="2_o32x7"]
 [ext_resource type="Texture2D" uid="uid://b0osbs48fptjo" path="res://assets/img/redFloor.png" id="3_q5vah"]
-[ext_resource type="Script" path="res://scripts/savegame.gd" id="4_6b3y6"]
-[ext_resource type="Script" path="res://scripts/return.gd" id="5_6tfrd"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qxa8b"]
 radius = 56.829
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_id3h8"]
 size = Vector2(923, 252.5)
+
+[sub_resource type="GDScript" id="GDScript_7mjwr"]
+script/source = "extends Button
+
+
+func _ready():
+	pass
+
+
+func _process(delta):
+	pass
+	
+"
+
+[sub_resource type="GDScript" id="GDScript_2tjvu"]
+script/source = "extends Button
+
+
+func _ready():
+	self.pressed.connect(self._button_pressed)
+
+
+func _process(delta):
+	pass
+
+
+func _button_pressed():
+	save_game()
+
+
+func save_game():
+	var save_game = FileAccess.open(\"user://savegame.save\", FileAccess.WRITE)
+	var save_nodes = get_tree().get_nodes_in_group(\"Persist\")
+	for node in save_nodes:
+		if node.scene_file_path.is_empty():
+			print(\"persistent node '%s' is not an instanced scene, skipped\" % node.name)
+			continue
+
+		if !node.has_method(\"save\"):
+			print(\"persistent node '%s' is missing a save() function, skipped\" % node.name)
+			continue
+
+		var node_data = node.call(\"save\")
+
+		var json_string = JSON.stringify(node_data)
+
+		print(\"SAVED\", json_string)
+		save_game.store_line(json_string)
+"
 
 [node name="Jogo" type="Node2D" groups=["Persist"]]
 position = Vector2(534, -428)
@@ -90,7 +137,7 @@ offset_right = 62.0
 offset_bottom = 42.0
 theme_override_font_sizes/font_size = 24
 text = "Return"
-script = ExtResource("5_6tfrd")
+script = SubResource("GDScript_7mjwr")
 
 [node name="save" type="Button" parent="CanvasLayer"]
 top_level = true
@@ -102,4 +149,7 @@ offset_bottom = 42.0
 grow_horizontal = 0
 theme_override_font_sizes/font_size = 24
 text = "Save"
-script = ExtResource("4_6b3y6")
+script = SubResource("GDScript_2tjvu")
+
+[connection signal="pressed" from="CanvasLayer/return" to="." method="_on_return_pressed"]
+[connection signal="pressed" from="CanvasLayer/save" to="." method="_on_save_pressed"]
