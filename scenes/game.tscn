@@ -1,8 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://1ik3cqnhnulg"]
+[gd_scene load_steps=9 format=3 uid="uid://1ik3cqnhnulg"]
 
+[ext_resource type="Script" path="res://scripts/game_scene.gd" id="1_ikg3t"]
 [ext_resource type="Script" path="res://scripts/player.gd" id="1_t8fdg"]
 [ext_resource type="Texture2D" uid="uid://btjc3w6bwpp6v" path="res://assets/img/yellowCircle.png" id="2_o32x7"]
 [ext_resource type="Texture2D" uid="uid://b0osbs48fptjo" path="res://assets/img/redFloor.png" id="3_q5vah"]
+[ext_resource type="Script" path="res://scripts/savegame.gd" id="4_6b3y6"]
+[ext_resource type="Script" path="res://scripts/return.gd" id="5_6tfrd"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_qxa8b"]
 radius = 56.829
@@ -10,69 +13,93 @@ radius = 56.829
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_id3h8"]
 size = Vector2(923, 252.5)
 
-[node name="Jogo" type="Node2D"]
+[node name="Jogo" type="Node2D" groups=["Persist"]]
 position = Vector2(534, -428)
+script = ExtResource("1_ikg3t")
 
 [node name="runningGame" type="Node2D" parent="."]
 
-[node name="Bolinha amarela" type="Node2D" parent="runningGame"]
+[node name="Player" type="Node2D" parent="runningGame"]
 position = Vector2(84, -123)
 
-[node name="RigidBody2D" type="RigidBody2D" parent="runningGame/Bolinha amarela"]
+[node name="PlayerObject" type="RigidBody2D" parent="runningGame/Player" groups=["player"]]
+unique_name_in_owner = true
 position = Vector2(-73, -27)
 scale = Vector2(0.8125, 0.8125)
 script = ExtResource("1_t8fdg")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="runningGame/Bolinha amarela/RigidBody2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="runningGame/Player/PlayerObject"]
 shape = SubResource("CircleShape2D_qxa8b")
 
-[node name="Sprite2D" type="Sprite2D" parent="runningGame/Bolinha amarela/RigidBody2D"]
+[node name="Sprite2D" type="Sprite2D" parent="runningGame/Player/PlayerObject"]
 scale = Vector2(0.220684, 0.220684)
 texture = ExtResource("2_o32x7")
 
-[node name="Camera2D" type="Camera2D" parent="runningGame/Bolinha amarela/RigidBody2D"]
+[node name="Camera2D" type="Camera2D" parent="runningGame/Player/PlayerObject"]
 scale = Vector2(1.23077, 1.23077)
 
-[node name="Chãos" type="Node" parent="runningGame"]
+[node name="Floor" type="Node" parent="runningGame"]
 
-[node name="Chão vermelho" type="Node2D" parent="runningGame/Chãos"]
+[node name="Floor 1" type="Node2D" parent="runningGame/Floor"]
 position = Vector2(522, -338)
 
-[node name="ground" type="StaticBody2D" parent="runningGame/Chãos/Chão vermelho"]
+[node name="ground" type="StaticBody2D" parent="runningGame/Floor/Floor 1"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="runningGame/Chãos/Chão vermelho/ground"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="runningGame/Floor/Floor 1/ground"]
 position = Vector2(0, 157)
 shape = SubResource("RectangleShape2D_id3h8")
 
-[node name="Sprite2D" type="Sprite2D" parent="runningGame/Chãos/Chão vermelho/ground"]
+[node name="Sprite2D" type="Sprite2D" parent="runningGame/Floor/Floor 1/ground"]
 position = Vector2(1.25, 157.75)
 scale = Vector2(3.13051, 1.08369)
 texture = ExtResource("3_q5vah")
 
-[node name="Chão vermelho2" type="Node2D" parent="runningGame/Chãos"]
+[node name="Floor 2" type="Node2D" parent="runningGame/Floor"]
 position = Vector2(-167, 195)
 
-[node name="ground" type="StaticBody2D" parent="runningGame/Chãos/Chão vermelho2"]
+[node name="ground" type="StaticBody2D" parent="runningGame/Floor/Floor 2"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="runningGame/Chãos/Chão vermelho2/ground"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="runningGame/Floor/Floor 2/ground"]
 position = Vector2(0, 157)
 shape = SubResource("RectangleShape2D_id3h8")
 
-[node name="Sprite2D" type="Sprite2D" parent="runningGame/Chãos/Chão vermelho2/ground"]
+[node name="Sprite2D" type="Sprite2D" parent="runningGame/Floor/Floor 2/ground"]
 position = Vector2(1.25, 157.75)
 scale = Vector2(3.13051, 1.08369)
 texture = ExtResource("3_q5vah")
 
-[node name="Chão vermelho3" type="Node2D" parent="runningGame/Chãos"]
+[node name="Floor 3" type="Node2D" parent="runningGame/Floor"]
 position = Vector2(1286, 198)
 
-[node name="ground" type="StaticBody2D" parent="runningGame/Chãos/Chão vermelho3"]
+[node name="ground" type="StaticBody2D" parent="runningGame/Floor/Floor 3"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="runningGame/Chãos/Chão vermelho3/ground"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="runningGame/Floor/Floor 3/ground"]
 position = Vector2(0, 157)
 shape = SubResource("RectangleShape2D_id3h8")
 
-[node name="Sprite2D" type="Sprite2D" parent="runningGame/Chãos/Chão vermelho3/ground"]
+[node name="Sprite2D" type="Sprite2D" parent="runningGame/Floor/Floor 3/ground"]
 position = Vector2(1.25, 157.75)
 scale = Vector2(3.13051, 1.08369)
 texture = ExtResource("3_q5vah")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="return" type="Button" parent="CanvasLayer"]
+top_level = true
+offset_right = 62.0
+offset_bottom = 42.0
+theme_override_font_sizes/font_size = 24
+text = "Return"
+script = ExtResource("5_6tfrd")
+
+[node name="save" type="Button" parent="CanvasLayer"]
+top_level = true
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -62.0
+offset_bottom = 42.0
+grow_horizontal = 0
+theme_override_font_sizes/font_size = 24
+text = "Save"
+script = ExtResource("4_6b3y6")

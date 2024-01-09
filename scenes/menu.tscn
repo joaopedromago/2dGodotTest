@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://b6ppg1yq3tvv1"]
+[gd_scene load_steps=3 format=3 uid="uid://b6ppg1yq3tvv1"]
 
+[ext_resource type="Script" path="res://scripts/loadGame.gd" id="1_d62wu"]
 [ext_resource type="Script" path="res://scripts/start.gd" id="1_f3lye"]
 
 [node name="Control" type="Control"]
@@ -10,16 +11,37 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Panel" type="Panel" parent="."]
-layout_mode = 0
-offset_right = 1026.0
-offset_bottom = 578.0
-
-[node name="Button" type="Button" parent="Panel"]
+[node name="CenterContainer" type="CenterContainer" parent="."]
 layout_mode = 2
-offset_left = 168.0
-offset_top = 364.0
-offset_right = 883.0
-offset_bottom = 507.0
+offset_right = 1022.0
+offset_bottom = 575.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CenterContainer"]
+layout_mode = 2
+
+[node name="MarginContainer2" type="MarginContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="LoadGame" type="Button" parent="CenterContainer/VBoxContainer/MarginContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
+text = "Load Game
+"
+script = ExtResource("1_d62wu")
+
+[node name="MarginContainer" type="MarginContainer" parent="CenterContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="StartGame" type="Button" parent="CenterContainer/VBoxContainer/MarginContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 64
 text = "Start Game"
 script = ExtResource("1_f3lye")
