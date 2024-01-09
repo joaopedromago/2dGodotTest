@@ -2,7 +2,8 @@ extends RigidBody2D
 
 var speed = 200
 var velocity = Vector2.ZERO
-var has_double_jump = false
+var isGrounded = false
+var hasDoubleJump = false
 
 
 func _ready():
@@ -10,19 +11,20 @@ func _ready():
 
 
 func _process(delta):
-	var has_velocity_changes = false
+	var hasVelocityChanges = false
 	var current_velocity = self.get_linear_velocity()
 
-	var new_x_velocity = velocity.x * speed
-	if new_x_velocity != current_velocity.x:
-		current_velocity.x = new_x_velocity
-		has_velocity_changes = true
+	var newXVelocity = velocity.x * speed
+	if newXVelocity != current_velocity.x:
+		current_velocity.x = newXVelocity
+		hasVelocityChanges = true
 
-	if has_velocity_changes:
+	if hasVelocityChanges:
 		self.set_linear_velocity(current_velocity)
-	
-	deathCheck()
-		
+
+	deathTest()
+
+
 func _input(event):
 	if event is InputEventKey:
 		if event.is_action_pressed("ui_left"):
@@ -35,20 +37,26 @@ func _input(event):
 			velocity.x = 0
 
 
+func _physics_process(delta):
+	var collisionObject = move_and_collide(velocity * speed * delta)
+	if collisionObject and collisionObject.get_collider().name:
+		isGrounded = true
 
 
-func deathCheck():
+func deathTest():
 	if ceil(self.global_position.y) >= 1000:
-		get_tree().change_scene_to_file(Globals.menu_scene)
+		var menuScene = "res://scenes/menu.tscn"
+		get_tree().change_scene_to_file(menuScene)
 
 
 func jump():
-	if is_touching_something():
+	if isGrounded:
 		performJump()
-		has_double_jump = true
-	elif has_double_jump:
+		isGrounded = false
+		hasDoubleJump = true
+	elif hasDoubleJump:
 		performJump()
-		has_double_jump = false
+		hasDoubleJump = false
 
 
 func performJump():
@@ -57,6 +65,3 @@ func performJump():
 	var velocity = input_vector * speed
 	self.linear_velocity = velocity
 	self.set_linear_velocity(velocity)
-
-func is_touching_something():
-	return get_contact_count()

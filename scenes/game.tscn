@@ -45,18 +45,15 @@ func save_game():
 	var save_nodes = get_tree().get_nodes_in_group(\"Persist\")
 	for node in save_nodes:
 		if node.scene_file_path.is_empty():
-			print(\"persistent node '%s' is not an instanced scene, skipped\" % node.name)
 			continue
 
 		if !node.has_method(\"save\"):
-			print(\"persistent node '%s' is missing a save() function, skipped\" % node.name)
 			continue
 
 		var node_data = node.call(\"save\")
 
 		var json_string = JSON.stringify(node_data)
 
-		print(\"SAVED\", json_string)
 		save_game.store_line(json_string)
 "
 
@@ -66,13 +63,14 @@ script = ExtResource("1_ikg3t")
 
 [node name="runningGame" type="Node2D" parent="."]
 
-[node name="Player" type="Node2D" parent="runningGame"]
-position = Vector2(84, -123)
+[node name="Player" type="CharacterBody2D" parent="runningGame"]
 
 [node name="PlayerObject" type="RigidBody2D" parent="runningGame/Player" groups=["player"]]
 unique_name_in_owner = true
-position = Vector2(-73, -27)
+position = Vector2(11, -150)
 scale = Vector2(0.8125, 0.8125)
+max_contacts_reported = 1
+contact_monitor = true
 script = ExtResource("1_t8fdg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="runningGame/Player/PlayerObject"]
