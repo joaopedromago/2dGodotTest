@@ -20,5 +20,4 @@ func _on_load_game_pressed():
 
 
 func start_game():
-	var gameScene = "res://scenes/game.tscn"
-	get_tree().change_scene_to_file(gameScene)
+	get_tree().change_scene_to_file(Globals.game_scene)

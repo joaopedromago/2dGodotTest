@@ -37,7 +37,7 @@ func load_game(this):
 		print("OBJECT NOT FOUND")
 		return
 
-	var player = this.get_node(Globals.playerPath)
+	var player = this.get_node(Globals.player_path)
 	object.instantiate()
 	player.position = Vector2(node_data["pos_x"], node_data["pos_y"])
 

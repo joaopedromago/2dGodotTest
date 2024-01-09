@@ -2,8 +2,8 @@ extends RigidBody2D
 
 var speed = 200
 var velocity = Vector2.ZERO
-var isGrounded = false
-var hasDoubleJump = false
+var is_grounded = false
+var has_double_jump = false
 
 
 func _ready():
@@ -11,20 +11,19 @@ func _ready():
 
 
 func _process(delta):
-	var hasVelocityChanges = false
+	var has_velocity_changes = false
 	var current_velocity = self.get_linear_velocity()
 
-	var newXVelocity = velocity.x * speed
-	if newXVelocity != current_velocity.x:
-		current_velocity.x = newXVelocity
-		hasVelocityChanges = true
+	var new_x_velocity = velocity.x * speed
+	if new_x_velocity != current_velocity.x:
+		current_velocity.x = new_x_velocity
+		has_velocity_changes = true
 
-	if hasVelocityChanges:
+	if has_velocity_changes:
 		self.set_linear_velocity(current_velocity)
-
-	deathTest()
-
-
+	
+	deathCheck()
+		
 func _input(event):
 	if event is InputEventKey:
 		if event.is_action_pressed("ui_left"):
@@ -38,25 +37,24 @@ func _input(event):
 
 
 func _physics_process(delta):
-	var collisionObject = move_and_collide(velocity * speed * delta)
-	if collisionObject and collisionObject.get_collider().name:
-		isGrounded = true
+	var collision_object = move_and_collide(velocity * speed * delta)
+	if collision_object and collision_object.get_collider().name:
+		is_grounded = true
 
 
-func deathTest():
+func deathCheck():
 	if ceil(self.global_position.y) >= 1000:
-		var menuScene = "res://scenes/menu.tscn"
-		get_tree().change_scene_to_file(menuScene)
+		get_tree().change_scene_to_file(Globals.menu_scene)
 
 
 func jump():
-	if isGrounded:
+	if is_grounded:
 		performJump()
-		isGrounded = false
-		hasDoubleJump = true
-	elif hasDoubleJump:
+		is_grounded = false
+		has_double_jump = true
+	elif has_double_jump:
 		performJump()
-		hasDoubleJump = false
+		has_double_jump = false
 
 
 func performJump():

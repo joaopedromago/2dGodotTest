@@ -18,7 +18,7 @@ func _process(delta):
 
 
 func save():
-	var player = get_node(Globals.playerPath)
+	var player = get_node(Globals.player_path)
 	var position = player.position
 
 	var save_dict = {
@@ -32,8 +32,7 @@ func save():
 
 
 func return_to_title():
-	var gameScene = "res://scenes/menu.tscn"
-	get_tree().change_scene_to_file(gameScene)
+	get_tree().change_scene_to_file(Globals.menu_scene)
 
 
 func _on_return_pressed():
